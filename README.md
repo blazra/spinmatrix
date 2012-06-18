@@ -1,2 +1,3 @@
 spinmatrix
 ==========
+smart!
