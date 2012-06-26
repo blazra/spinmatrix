@@ -1,4 +1,5 @@
 #include <avr/io.h>
+#include <avr/interrupt.h>
 
 #define bit_get(p,m) ((p) & (m))
 #define bit_set(p,m) ((p) |= (m))
@@ -48,9 +49,10 @@ void uart_init()
 void SPI_MasterInit(void)
 {
   /* Set MOSI and SCK output */
-  DDRB |= (1<<3)|(1<<5);
+  //DDRB |= (1<<3)|(1<<5);
+  DDRB=255;
   /* Enable SPI, Master, set clock rate fck/2 */
-  SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0);
+  SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0)|(1<<SPR1);
 }
 
 void SPI_MasterTransmit(char cData)
@@ -62,15 +64,28 @@ void SPI_MasterTransmit(char cData)
     ;
 }
 
+void TimerInit()
+{
+  TCCR1A = 0;
+  TCCR1B = (1<<WGM12)|(1<<CS10);	//CTC TOP in OCR1A
+  TIMSK = (1<<OCIE1A);			//interrupt enable on compare match
+  OCR1A = 33;				//value for comparison - TOP for counter
+}
+
+ISR(TIMER1_COMPA_vect)			//compare match interrupt handler
+{
+    //light up,wait,turn off lights,preload next 4 bytes
+}
 
 int main()
 {
+  
   //uart_init();
   SPI_MasterInit();
 
   while(1){
-    SPI_MasterTransmit(1);
-    delay(500);
+    SPI_MasterTransmit(3);
+    delay(1000);
   }	
   return 0;
 }
