@@ -52,7 +52,7 @@ void SPI_MasterInit(void)
   //DDRB |= (1<<3)|(1<<5);
   DDRB=255;
   /* Enable SPI, Master, set clock rate fck/2 */
-  SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0)|(1<<SPR1);
+  SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPI2X);
 }
 
 void SPI_MasterTransmit(char cData)
@@ -69,24 +69,58 @@ void TimerInit()
   TCCR1A = 0;
   TCCR1B = (1<<WGM12)|(1<<CS10);	//CTC TOP in OCR1A
   TIMSK = (1<<OCIE1A);			//interrupt enable on compare match
-  OCR1A = 33;				//value for comparison - TOP for counter
+  OCR1A = 65000;//33;				//value for comparison - TOP for counter
 }
 
 ISR(TIMER1_COMPA_vect)			//compare match interrupt handler
 {
+	bit_flip(PORTB,2);
     //light up,wait,turn off lights,preload next 4 bytes
 }
 
 int main()
 {
-  
-  //uart_init();
-  SPI_MasterInit();
-
-  while(1){
-    SPI_MasterTransmit(3);
-    delay(1000);
-  }	
-  return 0;
+	
+	//uart_init();
+	SPI_MasterInit();
+	int i,j;
+	bit_set(DDRB,3);//pin for strobe
+	bit_set(PORTB,1);//default off
+	TimerInit();
+	sei();
+	while(1)
+	{
+		for(i=1;i<(1<<8);i=(i<<1))
+		{
+			for(j=0;j<4;j++)
+			SPI_MasterTransmit(i);
+			bit_set(PORTB,1);//generate edge
+			bit_clr(PORTB,1);//then go off
+			delay(10);
+		}
+		//delay(500);
+	}
+	//manual control
+	/*
+	DDRB=7;
+	int i,t=1;
+	while (1)
+	{
+		bit_set(PORTB,2);
+		bit_set(PORTB,1);
+		delay(t);
+		bit_clr(PORTB,1);
+		delay(t);
+		bit_clr(PORTB,2);
+		for(i=0;i<31;i++)
+		{
+			bit_set(PORTB,1);
+			delay(t);
+			bit_clr(PORTB,1);
+			delay(t);
+			
+		}
+		delay(500);
+	}*/
+	return 0;
 }
-

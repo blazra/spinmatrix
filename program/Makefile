@@ -30,5 +30,4 @@ hex:  $(PRG).hex
 install: load
 
 load: $(PRG).hex
-	avrdude -p m8 -c usbtiny -U flash:w:$< 
-
+	avrdude -p m8 -c stk200 -U flash:w:$< 
