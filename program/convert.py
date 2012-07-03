@@ -2,6 +2,16 @@
 
 #this script converts BW image into ARRAY in C file, one line of array means one column on display
 
+"""pixel array indexing
+[0,0] [1,0] [2,0] [3,0]...
+[0,1] [1,1] [2,1] [3,1]...
+[0,2] [1,2] [2,2] [3,2]...
+[0,3] [1,3] [2,3] [3,3]...
+
+so the [0,0] px is in the left upper corner!
+not same as common 2D indexing...
+"""
+
 try:#try to import Image part from PIL module
 	from PIL import Image
 except:

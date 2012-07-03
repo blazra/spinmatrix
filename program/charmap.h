@@ -1,5 +1,5 @@
-//cislovano je od neveho spodniho rohu,
-//takze pri pohledu na display je to tam musi sunout ze shora
+//cislovano je od leveho horniho rohu,
+//takze pri pohledu na display je to tam musi sunout ze spoda
 
 //tohle vytvoril DiGGiTuv script napsany v pythonu...
 const uint8_t chars[] PROGMEM = 
