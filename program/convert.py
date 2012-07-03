@@ -43,7 +43,7 @@ of=open("charmap.h","w")#open output file for writing
 pmap=map.load()#load pixel map for faster reading
 of.write("//cislovano je od leveho horniho rohu,\n//takze pri pohledu na display je to tam musi sunout ze spoda\n\n")
 of.write("//tohle vytvoril DiGGiTuv script napsany v pythonu...\n")
-of.write("const uint8_t chars[] PROGMEM = \n{\n")
+of.write("const uint8_t chars[][] PROGMEM = \n{\n")
 line_str="{"#this will be buffer for line when is builded
 for col in range (map.size[0]):#do if for every column
 	for byte in range(4):#four separated cells (here means bytes)
