@@ -2,7 +2,7 @@
 //takze pri pohledu na display je to tam musi sunout ze spoda
 
 //tohle vytvoril DiGGiTuv script napsany v pythonu...
-const uint8_t chars[] PROGMEM = 
+const uint8_t chars[][] PROGMEM = 
 {
 //char  A (0)
 	{0b00000000,0b00000000,0b00000000,0b00000000},
