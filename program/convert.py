@@ -44,7 +44,7 @@ pmap=map.load()#load pixel map for faster reading
 of.write("//cislovano je od leveho horniho rohu,\n//takze pri pohledu na display je to tam musi sunout ze spoda\n\n")
 of.write("//tohle vytvoril DiGGiTuv script napsany v pythonu...\n")
 of.write("const uint8_t chars[] PROGMEM = \n{\n")
-line_str=""#this will be buffer for line when is builded
+line_str="{"#this will be buffer for line when is builded
 for col in range (map.size[0]):#do if for every column
 	for byte in range(4):#four separated cells (here means bytes)
 		line_str=line_str+"0b"#add new byte beginning (for gcc) to line
@@ -53,15 +53,18 @@ for col in range (map.size[0]):#do if for every column
 				line_str=line_str+"1"#this px will shine
 			else:
 				line_str=line_str+"0"#this will stay dark
-		line_str=line_str+","#separator between bytes
+		if(byte==3):
+			line_str=line_str+"},"#separator between bytes
+		else:
+			line_str=line_str+","#separator between bytes
 	if(col%24==0):
-		of.write("//char number "+str(col/24)+"\n")#separate every 24 lines with comment
+		of.write("//char "+" %c" %(col/24+65)+" ("+str(col/24)+")\n")#separate every 24 lines with comment
 	if(col==map.size[0]-1):
 		line_str=line_str[:-1]#after last byte dont write comma
 	of.write("\t"+line_str+"\n")#whole line data are recorded
-	line_str=""#clear buffer for new line
+	line_str="{"#clear buffer for new line
 	#go on new line and repeat
 
-of.write("}\n")
+of.write("};\n")
 of.write("//a to je prosim vse\n")
 of.close()#and close file in the end
