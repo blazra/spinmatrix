@@ -31,18 +31,20 @@ else:
 #open output file
 of=open("charmap.h","w")
 pmap=map.load()
-of.write("//cislovano je od neveho spodniho rohu,\n//takze pri pohledu na display je to tam musi sunout ze shora\n\n")
+of.write("//cislovano je od leveho horniho rohu,\n//takze pri pohledu na display je to tam musi sunout ze spoda\n\n")
 of.write("//tohle vytvoril DiGGiTuv script napsany v pythonu...\n")
 of.write("const uint8_t chars[] PROGMEM = \n{\n")
 line_str=""
 tohex=0
 for col in range (map.size[0]):
 	for byte in range(4):
+		line_str=line_str+"0b"
 		for row in range (8):
-			if (pmap[col,row+byte*8]!=1):#if black....
-				tohex=tohex+2**byte
-		line_str="0x"+format(tohex,"02x")+","+line_str
-		tohex=0
+			if (pmap[col,row+byte*8]==0):#if black....
+				line_str=line_str+"1"
+			else:
+				line_str=line_str+"0"
+		line_str=line_str+","
 	if(col%24==0):
 		of.write("//char number "+str(col/24)+"\n")
 	if(col==map.size[0]-1):
@@ -51,5 +53,5 @@ for col in range (map.size[0]):
 	line_str=""
 
 of.write("}\n")
-of.write("//a to je prosim vse")
+of.write("//a to je prosim vse\n")
 of.close()
