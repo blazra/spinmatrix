@@ -1,0 +1,10 @@
+difference(){
+union(){
+difference(){
+union(){cylinder(h=25,r=40);translate([0,10,12.5])cube([100,10,25],center=true);}
+translate([0,-35,0])cube(80,center=true);
+}
+translate([-50,-40,0])cube([100,30,25]);
+}
+translate([0,0,-50])cylinder(h=115,r=28.5);
+}
