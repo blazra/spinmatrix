@@ -1,10 +1,11 @@
 difference(){
-	cylinder(r=24,h=15,center=true);
+	union()
+	{
+	cylinder(r=25.5,h=15,center=true);
+	//translate([0,0,-8.5])cylinder(r=27.5,h=1);	//limec
+	}
 
-	translate([0,0,2])cylinder(r=21,h=12,center=true);
-	cylinder(r=15,h=16,center=true);
-	translate([0,-25,-25])cube(50);
-	rotate([90,0,0])cylinder(r=2,h=50,center=true);
-	rotate([0,90,0])cylinder(r=2,h=50,center=true);
+	cylinder(r=21.3,h=18,center=true);
+	
 }
 
