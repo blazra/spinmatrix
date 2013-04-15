@@ -1,3 +1,3 @@
-spinmatrix
+Spinmatrix
 ==========
-smart!
+Spinning LED display...
